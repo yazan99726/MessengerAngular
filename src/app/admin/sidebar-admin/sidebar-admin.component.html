@@ -1,0 +1,140 @@
+<div class="sidebar" data-color="azure" data-background-color="white" data-image="../../../assets/Admin/Img/sidebar-1.jpg">
+    <div class="logo">
+        <a routerLink="/admin" class="simple-text logo-normal">
+            <img   src="../../../assets/home/Images/logo/landing-logo.png" width="70%" style="padding: 12px;" alt="logo">
+        </a>
+    </div>
+    <div class="sidebar-wrapper">
+        <div class="user" *ngIf="admin.UserInfo!=undefined">
+            <div class="photo">
+                <img src="../../../assets/Img/{{admin.UserInfo.proFileImg}}" alt="image profile" />
+            </div>
+            <div class="user-info">
+                <a data-toggle="collapse" href="#collapseExample" class="username">
+                    <span>
+                        {{admin.UserInfo.userName}}
+                        <b class="caret"></b>
+                    </span>
+                </a>
+                <div class="collapse" id="collapseExample">
+                    <ul class="nav">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/admin/edit">
+                                <span class="sidebar-mini"> EP </span>
+                                <span class="sidebar-normal"> Edit Profile </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <ul class="nav">
+            <!-- Dashboard -->
+            <li class="nav-item active ">
+                <a class="nav-link" routerLink="/admin">
+                    <i class="material-icons">dashboard</i>
+                    <p> Dashboard </p>
+                </a>
+            </li>
+            <!-- mange pages -->
+            
+            <!-- User pages -->
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#pages">
+                    <i class="material-icons">apps</i>
+                    <p> User
+                        <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse" id="pages">
+                    <ul class="nav">
+                        <!-- Users Active -->
+                        <li class="nav-item ">
+                            <a class="nav-link" routerLink='/admin/user'>
+                                <i class="material-icons">timeline</i>
+                                <p>Users Active</p>
+                            </a>
+                        </li>
+                        <!-- Block Users -->
+                        <li class="nav-item ">
+                            <a class="nav-link" routerLink='/admin/Block'>
+
+                                <i class="material-icons">block</i>
+                                <p>Block Users</p>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <!-- Report Users -->
+            <li class="nav-item ">
+                <a class="nav-link" routerLink="/admin/Report">
+                    <i class="material-icons">report</i>
+                    <p>Report Users</p>
+                </a>
+            </li>
+            <!-- service -->
+            <li class="nav-item ">
+                <a class="nav-link" routerLink="/admin/services">
+                    <i class="material-icons">room_service</i>
+                    <p>service</p>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" routerLink="/admin/payment">
+                    <i class="material-icons">credit_card</i>
+                    <p>Payment</p>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" routerLink='/admin/testimonial'>
+                    <i class="material-icons">reviews</i>
+                    <p> Testimonial </p>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" data-toggle="collapse" href="#pagesExamples">
+                    <i class="material-icons">image</i>
+                    <p> Manage pages <b class="caret"></b>
+                    </p>
+                </a>
+                <div class="collapse" id="pagesExamples">
+                    <ul class="nav">
+                        <li class="nav-item ">
+                            <a class="nav-link" routerLink='/admin/home'>
+                                <span class="sidebar-mini"> H </span>
+                                <span class="sidebar-normal"> Home </span>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" routerLink='/admin/about'>
+                                <span class="sidebar-mini"> AU </span>
+                                <span class="sidebar-normal"> About Us </span>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" routerLink='/admin/contact'>
+                                <span class="sidebar-mini"> CU </span>
+                                <span class="sidebar-normal"> Contact Us </span>
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" routerLink='/admin/footer'>
+                                <span class="sidebar-mini"> CU </span>
+                                <span class="sidebar-normal"> Footer </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            
+            <li class="nav-item " (click)="logout()">
+                <a class="nav-link">
+                    <i class="material-icons">lock</i>
+                    <p> Log Out </p>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="sidebar-background"></div>
+</div>

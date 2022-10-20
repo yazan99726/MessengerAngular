@@ -1,0 +1,20 @@
+.messagetext-custom{
+    color: wheat;
+}
+.padingMessage-custom{
+    padding-bottom: 5rem;
+}
+
+.avatar-online::before {
+    background: #32a42a;
+}
+
+.btnDelete{
+    cursor: pointer;
+    background-color: #f5eeee;
+    border-radius: 50%;
+    margin-left: -10px;
+    position: absolute;
+    width: 10px;
+    text-align: center
+  }

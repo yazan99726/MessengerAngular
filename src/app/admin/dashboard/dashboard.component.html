@@ -1,0 +1,237 @@
+<div class="wrapper ">
+    <app-sidebar-admin></app-sidebar-admin>
+    <div class="main-panel">
+        <app-navbar-admin></app-navbar-admin>
+        <div class="content">
+            <div class="content">
+                <div class="container-fluid">
+                    <!-- cart -->
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="card card-stats">
+                                <div class="card-header card-header-warning card-header-icon">
+                                    <div class="card-icon">
+                                        <i class="material-icons">weekend</i>
+                                    </div>
+                                    <p class="card-category">Number of users</p>
+                                    <h3 class="card-title">{{admin.numberofuser}}</h3>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                        <i class="material-icons text-danger">warning</i>
+                                        <a [routerLink]="['/user']">Get More Users</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="card card-stats">
+                                <div class="card-header card-header-rose card-header-icon">
+                                    <div class="card-icon">
+                                        <i class="material-icons">equalizer</i>
+                                    </div>
+                                    <p class="card-category">Number of users Active</p>
+                                    <h3 class="card-title">{{admin.numofusersActive}}</h3>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                        <a [routerLink]="['/user']">Get More Users</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="card card-stats">
+                                <div class="card-header card-header-success card-header-icon">
+                                    <div class="card-icon">
+                                        <i class="material-icons">store</i>
+                                    </div>
+                                    <p class="card-category">Revenue</p>
+                                    <h3 class="card-title">${{admin.numofrevenue}}</h3>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                        <i class="material-icons">date_range</i> Last 24 Hours
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="card card-stats">
+                                <div class="card-header card-header-info card-header-icon">
+                                    <div class="card-icon">
+                                        <i class="material-icons">room_service</i>
+                                    </div>
+                                    <p class="card-category">Number of Services</p>
+                                    <h3 class="card-title">{{admin.numofServes}}</h3>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="stats">
+                                        <i class="material-icons">update</i> Just Updated
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card ">
+                            <div class="card-header card-header-success card-header-icon">
+                                <div class="card-icon">
+                                    <i class="material-icons"></i>
+                                </div>
+                                <h4 class="card-title">Chart</h4>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <canvas id="myChart" width="50" height="50">{{chart}}</canvas>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card ">
+                            <div class="card-header card-header-success card-header-icon">
+                                <div class="card-icon">
+                                    <i class="material-icons"></i>
+                                </div>
+                                <h4 class="card-title">Chart</h4>
+                            </div>
+                            <div class="col-md-6">
+                                <canvas id="myChart2" width="50" height="50">{{chart}}</canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header card-header-icon card-header-rose">
+                                <div class="card-icon">
+                                    <i class="material-icons">assignment</i>
+                                </div>
+                                <h4 class="card-title "> Payment Table</h4>
+                            </div>
+                            <div class="card-body table-full-width table-hover">
+                                <div class="table-responsive">
+                                    <button type="button" class="btn btn-info" (click)="downloadPDF()">PDF</button>
+                                    <table class="table" #content>
+                                        <thead class="">
+                                            <th>#</th>
+                                            <th> First Name</th>
+                                            <th>Last Name</th>
+                                            <th>UserName </th>
+                                            <th>Service Name</th>
+                                        </thead>
+                                        <tbody *ngFor="let item of admin.Payment;index as i">
+                                            <tr class="table-info" *ngIf="i%2 == 0">
+                                                <td>{{i}}</td>
+                                                <td>{{item.fname}}</td>
+                                                <td>{{item.lname}}</td>
+                                                <td>{{item.userName}}</td>
+                                                <td>{{item.servicename}}</td>
+                                            </tr>
+                                            <tr class="table-light" *ngIf="i%2 !=0">
+                                                <td>{{i}}</td>
+                                                <td>{{item.fname}}</td>
+                                                <td>{{item.lname}}</td>
+                                                <td>{{item.userName}}</td>
+                                                <td>{{item.servicename}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-footer-admin></app-footer-admin>
+</div>
+<!--<div class="fixed-plugin">
+    <div class="dropdown show-dropdown">
+        <a data-toggle="dropdown">
+            <i class="fa fa-cog fa-2x"> </i>
+        </a>
+        <ul class="dropdown-menu">
+            <li class="header-title"> Sidebar Filters</li>
+            <li class="adjustments-line">
+                <a href="javascript:void(0)" class="switch-trigger active-color">
+                    <div class="badge-colors ml-auto mr-auto">
+                        <span class="badge filter badge-purple" data-color="purple"></span>
+                        <span class="badge filter badge-azure" data-color="azure"></span>
+                        <span class="badge filter badge-green" data-color="green"></span>
+                        <span class="badge filter badge-warning" data-color="orange"></span>
+                        <span class="badge filter badge-danger" data-color="danger"></span>
+                        <span class="badge filter badge-rose active" data-color="rose"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+            <li class="header-title">Sidebar Background</li>
+            <li class="adjustments-line">
+                <a href="javascript:void(0)" class="switch-trigger background-color">
+                    <div class="ml-auto mr-auto">
+                        <span class="badge filter badge-black active" data-background-color="black"></span>
+                        <span class="badge filter badge-white" data-background-color="white"></span>
+                        <span class="badge filter badge-red" data-background-color="red"></span>
+                    </div>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+            <li class="adjustments-line">
+                <a href="javascript:void(0)" class="switch-trigger">
+                    <p>Sidebar Mini</p>
+                    <label class="ml-auto">
+                        <div class="togglebutton switch-sidebar-mini">
+                            <label>
+                                <input type="checkbox">
+                                <span class="toggle"></span>
+                            </label>
+                        </div>
+                    </label>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+            <li class="adjustments-line">
+                <a href="javascript:void(0)" class="switch-trigger">
+                    <p>Sidebar Images</p>
+                    <label class="switch-mini ml-auto">
+                        <div class="togglebutton switch-sidebar-image">
+                            <label>
+                                <input type="checkbox" checked="">
+                                <span class="toggle"></span>
+                            </label>
+                        </div>
+                    </label>
+                    <div class="clearfix"></div>
+                </a>
+            </li>
+            <li class="header-title">Images</li>
+            <li class="active">
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../../../assets/Admin/img/sidebar-1.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../../../assets/Admin/img/sidebar-2.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../../../assets/Admin/img/sidebar-3.jpg" alt="">
+                </a>
+            </li>
+            <li>
+                <a class="img-holder switch-trigger" href="javascript:void(0)">
+                    <img src="../../../assets/Admin/img/sidebar-4.jpg" alt="">
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>-->

@@ -1,0 +1,392 @@
+
+ <div class="layout overflow-hidden">
+    <!-- Navigation -->
+    <app-navbar></app-navbar>
+    <!-- Navigation -->
+
+ <!-- content -->
+ <aside class="sidebar bg-light">
+    <div class="h-100" role="">
+ <div class="h-100" id="tab-content-friends" role="tabpanel">
+    <div class="d-flex flex-column h-100">
+        <div class="hide-scrollbar">
+            <div class="container py-8">
+
+                <!-- Title -->
+                <div class="mb-8">
+                    <h2 class="fw-bold m-0">Friends</h2>
+                </div>
+
+                <!-- Search -->
+                <div class="mb-6">
+                    <form action="#">
+                        <div class="input-group">
+                            <div class="input-group-text">
+                                <div class="icon icon-lg">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                </div>
+                            </div>
+
+                            <input name="searchText" [(ngModel)]="this.chat.searchText" type="text" class="form-control form-control-lg ps-0" placeholder="Search messages or users" aria-label="Search for messages or users...">
+                        </div>
+                    </form>
+
+                    <!-- Invite button -->
+                    <div class="mt-5">
+                        <a class="btn btn-lg btn-primary w-100 d-flex align-items-center" (click)="opendDialogAddFriend()">
+                            Add Friends
+
+                            <span class="icon ms-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2">
+                                    </path>
+                                    <circle cx="8.5" cy="7" r="4"></circle>
+                                    <line x1="20" y1="8" x2="20" y2="14"></line>
+                                    <line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- List -->
+                <div class="card-list">
+                    <div class="my-5">
+                        <p class="text-uppercase text-muted" style="color: black!important;">All Friend ( {{this.chat.numOfFriend}} )</p>
+                    </div>
+
+                    <!-- Card -->
+                    <div class="card border-0" *ngFor="let item of this.chat.transform(this.chat.myFriend,{'fname':this.chat.searchText },false)">
+                        <div class="card-body">
+
+                            <div class="row align-items-center gx-5">
+                                <div class="col-auto">
+                                    <a class="avatar" (click)="UserProfile(item.user.userId)">
+                                        <img class="avatar-img" [ngClass]="item.user.isActive ==1 ?'avatar-online' : ''" 
+                                        *ngIf="item.user.proFileImg != null||''||undefined"
+                                        src="../../../assets/Img/{{item.user.proFileImg}}" alt=""> 
+                                        <span class="avatar-text" *ngIf="item.user.proFileImg == null||''||undefined">{{ item.user.userName |uppercase | slice:0:1 }}</span>
+                                    </a>
+                                </div>
+
+                                <div class="col" (click)="UserProfile(item.user.userId)">
+                                    <h5><a>{{item.user.fname}} {{item.user.lname}}</a></h5>
+                                    <p *ngIf="item.user.isActive ==1">Active</p>
+                                    <p *ngIf="item.user.isActive ==0">UnActive</p>
+                                </div>
+
+                                <div class="col-auto">
+                                    <!-- Dropdown -->
+                                    <div class="dropdown">
+                                        <a class="icon text-muted" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                                        </a>
+
+                                        <ul class="dropdown-menu">
+                                            <!-- <li><a class="dropdown-item" href="#">New message</a></li>
+                                            <li><a class="dropdown-item" href="#">Edit contact</a>
+                                            </li> -->
+                                            <li>
+                                                <a class="dropdown-item" (click)="OpenReportUserDialog(item.user.userId)">Report User</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item text-danger" (click)="Blockuser(item.frindid)">Block user</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>       
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- Card -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+    </aside>
+ <!-- content -->
+ 
+ 
+ <!-- Chat -->
+            
+ <main class="main" [ngClass]="this.chat.collapse  ? 'is-visible' : ''" data-dropzone>
+    <div class="container h-100">
+        <app-chatempty *ngIf="this.chat.id==0" ></app-chatempty>
+        <app-chat-with-message *ngIf="this.chat.id!=0"></app-chat-with-message>        
+    </div>
+</main>
+
+<!-- Chat -->
+
+</div>
+<!-- Layout -->
+
+
+<ng-template #AddFriendDialog>
+    <!-- Modal: Invite -->
+    <div>
+        <div class="">
+            <div class="">
+
+                <!-- Modal: Body -->
+                <div class="modal-body py-0">
+                    <!-- Header -->
+                    <div class="profile modal-gx-n">
+                        <div class="profile-img text-primary rounded-top-xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 400 140.74"><defs><style>.cls-2{fill:#fff;opacity:0.1;}</style></defs><g><g><path d="M400,125A1278.49,1278.49,0,0,1,0,125V0H400Z"/><path class="cls-2" d="M361.13,128c.07.83.15,1.65.27,2.46h0Q380.73,128,400,125V87l-1,0a38,38,0,0,0-38,38c0,.86,0,1.71.09,2.55C361.11,127.72,361.12,127.88,361.13,128Z"/><path class="cls-2" d="M12.14,119.53c.07.79.15,1.57.26,2.34v0c.13.84.28,1.66.46,2.48l.07.3c.18.8.39,1.59.62,2.37h0q33.09,4.88,66.36,8,.58-1,1.09-2l.09-.18a36.35,36.35,0,0,0,1.81-4.24l.08-.24q.33-.94.6-1.9l.12-.41a36.26,36.26,0,0,0,.91-4.42c0-.19,0-.37.07-.56q.11-.86.18-1.73c0-.21,0-.42,0-.63,0-.75.08-1.51.08-2.28a36.5,36.5,0,0,0-73,0c0,.83,0,1.64.09,2.45C12.1,119.15,12.12,119.34,12.14,119.53Z"/><circle class="cls-2" cx="94.5" cy="57.5" r="22.5"/><path class="cls-2" d="M276,0a43,43,0,0,0,43,43A43,43,0,0,0,362,0Z"/></g></g></svg>
+
+                            <div class="position-absolute top-0 start-0 p-5">
+                                <button type="button" class="btn-close btn-close-white btn-close-arrow opacity-100" (click)="CloseDialog()"></button>
+                            </div>
+                        </div>
+
+                        <div class="profile-body">
+                            <div class="avatar avatar-lg">
+                                <span class="avatar-text bg-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                                </span>
+                            </div>
+
+                            <h4 class="fw-bold mb-1">Invite your friends</h4>
+                            <p style="font-size: 16px;">Send invitation links to your friends</p>
+                            
+                        </div>
+                        <a class="icon icon-lg text-muted" data-bs-toggle="collapse" href="#search-members" role="button" aria-expanded="false" aria-controls="search-members" onclick="event.preventDefault();">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                        </a>
+                    </div>
+                    <!-- Header -->
+
+                    <hr class="hr-bold modal-gx-n my-0">
+                    <!-- Card -->
+                     <!-- Search -->
+                <div class="collapse" id="search-members">
+                    <div class="border-bottom py-6">
+
+                        <form action="#">
+                            <div class="input-group">
+                                <div class="input-group-text" id="search-user">
+                                    <div class="icon icon-lg">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                    </div>
+                                </div>
+
+                                <input type="text" class="form-control form-control-lg ps-0" name="searchUser" [(ngModel)]="this.searchUser" placeholder="User name" aria-label="User name" aria-describedby="search-user">
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <!-- Search -->
+                    <div>
+                        <div class="card border-0 mb-5" *ngFor="let item of this.chat.transform(this.chat.Alluser,{'userName':this.searchUser },false)">
+                        <div class="card-body" (click)="UserProfile(item.userId)">
+
+                            <div class="row gx-5">
+                                <div class="col-auto">
+                                    <!-- Avatar -->
+                                    <a class="avatar">
+                                        <img class="avatar-img" src="../../../assets/Img/{{item.proFileImg}}" alt="">
+                                    </a>
+                                </div>
+
+                                <div class="col" >
+                                    <div class="d-flex align-items-center mb-2">
+                                        <h5 class="me-auto mb-0">
+                                            <a>{{item.userName}}</a>
+                                        </h5>
+                                        
+                                    </div>
+
+                                    <div class="d-flex">
+                                        <div class="me-auto">{{item.fname}} {{item.lname}}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="row gx-4">
+                                <div class="col">
+                                    <a class="btn btn-sm btn-primary w-100" (click)="addFriend(item.userId)"> Add Friend</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    <!-- Card -->
+
+            </div>
+        </div>
+    </div>
+    </div>
+</ng-template>
+
+
+<ng-template #ReportUserDialog >
+    <!-- Modal: Invite -->
+    <div>
+        <div class="">
+            <div class="">
+
+                <!-- Modal: Body -->
+                <div class="modal-body py-0">
+                    <!-- Header -->
+                    <div class="profile modal-gx-n">
+                        <div class="profile-img text-primary rounded-top-xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 400 140.74"><defs><style>.cls-2{fill:#fff;opacity:0.1;}</style></defs><g><g><path d="M400,125A1278.49,1278.49,0,0,1,0,125V0H400Z"/><path class="cls-2" d="M361.13,128c.07.83.15,1.65.27,2.46h0Q380.73,128,400,125V87l-1,0a38,38,0,0,0-38,38c0,.86,0,1.71.09,2.55C361.11,127.72,361.12,127.88,361.13,128Z"/><path class="cls-2" d="M12.14,119.53c.07.79.15,1.57.26,2.34v0c.13.84.28,1.66.46,2.48l.07.3c.18.8.39,1.59.62,2.37h0q33.09,4.88,66.36,8,.58-1,1.09-2l.09-.18a36.35,36.35,0,0,0,1.81-4.24l.08-.24q.33-.94.6-1.9l.12-.41a36.26,36.26,0,0,0,.91-4.42c0-.19,0-.37.07-.56q.11-.86.18-1.73c0-.21,0-.42,0-.63,0-.75.08-1.51.08-2.28a36.5,36.5,0,0,0-73,0c0,.83,0,1.64.09,2.45C12.1,119.15,12.12,119.34,12.14,119.53Z"/><circle class="cls-2" cx="94.5" cy="57.5" r="22.5"/><path class="cls-2" d="M276,0a43,43,0,0,0,43,43A43,43,0,0,0,362,0Z"/></g></g></svg>
+
+                            <div class="position-absolute top-0 start-0 p-5">
+                                <button type="button" class="btn-close btn-close-white btn-close-arrow opacity-100" (click)="CloseDialog()"></button>
+                            </div>
+                        </div>
+
+                        <div class="profile-body">
+                            <div class="avatar avatar-lg">
+                                <span class="avatar-text bg-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                                </span>
+                            </div>
+
+                            <!-- <h4 class="fw-bold mb-1">Invite your friends</h4> -->
+                            <p style="font-size: 16px;">Report This User</p>
+                        </div>
+                    </div>
+                    <!-- Header -->
+
+                    <hr class="hr-bold modal-gx-n my-0">
+
+                    <!-- Form -->
+                    <div class="modal-py">
+                        <form class="row gy-6" [formGroup]="reportUserForm">
+                            <div class="col-12">
+                                <label for="invite-message" class="form-label text-muted">Message</label>
+                                <textarea class="form-control form-control-lg" id="invite-message" rows="3" formControlName="ReportText" placeholder="Report Text"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Form -->
+
+                    <hr class="hr-bold modal-gx-n my-0">
+
+                    <!-- Button -->
+                    <div class="modal-py">
+                        <a  class="btn btn-lg btn-primary w-100 d-flex align-items-center" (click)="ReportUser()">
+                            Send
+
+                            <span class="icon ms-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </span>
+                        </a>
+                    </div>
+                    <!-- Button -->
+                </div>
+                <!-- Modal: Body -->
+
+            </div>
+        </div>
+    </div>
+</ng-template>
+
+
+<ng-template #userProfileDialog >
+    <!-- Modal: User profile -->
+    <div class="modal-body py-0">
+                    <!-- Header -->
+                    <div class="profile modal-gx-n">
+                        <div class="profile-img text-primary rounded-top-xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 400 140.74">
+                                <defs>
+                                    <style>
+                                        .cls-2 {
+                                            fill: #fff;
+                                            opacity: 0.1;
+                                        }
+                                    </style>
+                                </defs>
+                                <g>
+                                    <g>
+                                        <path d="M400,125A1278.49,1278.49,0,0,1,0,125V0H400Z" />
+                                        <path class="cls-2"
+                                            d="M361.13,128c.07.83.15,1.65.27,2.46h0Q380.73,128,400,125V87l-1,0a38,38,0,0,0-38,38c0,.86,0,1.71.09,2.55C361.11,127.72,361.12,127.88,361.13,128Z" />
+                                        <path class="cls-2"
+                                            d="M12.14,119.53c.07.79.15,1.57.26,2.34v0c.13.84.28,1.66.46,2.48l.07.3c.18.8.39,1.59.62,2.37h0q33.09,4.88,66.36,8,.58-1,1.09-2l.09-.18a36.35,36.35,0,0,0,1.81-4.24l.08-.24q.33-.94.6-1.9l.12-.41a36.26,36.26,0,0,0,.91-4.42c0-.19,0-.37.07-.56q.11-.86.18-1.73c0-.21,0-.42,0-.63,0-.75.08-1.51.08-2.28a36.5,36.5,0,0,0-73,0c0,.83,0,1.64.09,2.45C12.1,119.15,12.12,119.34,12.14,119.53Z" />
+                                        <circle class="cls-2" cx="94.5" cy="57.5" r="22.5" />
+                                        <path class="cls-2" d="M276,0a43,43,0,0,0,43,43A43,43,0,0,0,362,0Z" />
+                                    </g>
+                                </g>
+                            </svg>
+
+                            <div class="position-absolute top-0 start-0 p-5">
+                                <button type="button" class="btn-close btn-close-white btn-close-arrow opacity-100" (click)="CloseDialog()"
+                                    data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                        </div>
+
+                        <div class="profile-body">
+                            <div class="avatar avatar-xl">
+                                <img class="avatar-img"
+                                    *ngIf="this.chat.userProfile[0].proFileImg!= null||''||undefined"
+                                    src="../../../assets/Img/{{this.chat.userProfile[0].proFileImg}}"
+                                    width="100%" height="100%" alt="#">
+                                    <span class="avatar-text" *ngIf="this.chat.userProfile[0].proFileImg == null||''||undefined">{{ this.chat.userProfile[0].userName |uppercase | slice:0:1 }}</span>
+                            </div>
+
+                            <h4 class="mb-1">{{this.chat.userProfile[0].fname}}
+                                {{this.chat.userProfile[0].lname}}
+                            <br/>
+                            <p *ngIf="this.chat.userProfile[0].isActive==1">onLine</p>
+                            <p *ngIf="this.chat.userProfile[0].isActive==0">offLine</p>
+                            </h4>
+
+                        </div>
+                    </div>
+                    <!-- Header -->
+
+                    <hr class="hr-bold modal-gx-n my-0">
+
+                    <!-- List -->
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="row align-items-center gx-6">
+                                <div class="col">
+                                    <h5>User Name</h5>
+                                    <p>{{this.chat.userProfile[0].userName}}</p>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="list-group-item">
+                            <div class="row align-items-center gx-6">
+                                <div class="col">
+                                    <h5>User Bio</h5>
+                                    <p>{{this.chat.userProfile[0].userBio}}</p>
+                                </div>
+                            </div>
+
+                        </li>
+                    </ul>
+
+                    <!-- List -->
+
+                    <hr class="hr-bold modal-gx-n my-0">
+
+                    <!-- List -->
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="row align-items-center gx-6">
+                                <div class="col">
+                                    <h5>Gender</h5>
+                                    <p>{{this.chat.userProfile[0].gender}}</p>
+                                </div>
+                            </div>
+
+
+                        </li>
+                    </ul>
+                    <!-- List -->
+    </div>
+</ng-template>

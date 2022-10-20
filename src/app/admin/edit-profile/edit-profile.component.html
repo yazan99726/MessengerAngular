@@ -1,0 +1,95 @@
+<div class="wrapper ">
+
+    <app-sidebar-admin></app-sidebar-admin>
+    <div class="main-panel">
+        <app-navbar-admin></app-navbar-admin>
+        <div class="content">
+            <div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header card-header-icon card-header-rose">
+                                    <div class="card-icon">
+                                        <i class="material-icons">perm_identity</i>
+                                    </div>
+                                    <h4 class="card-title">Edit Profile - <small class="category">Complete your
+                                            profile</small>
+                                    </h4>
+                                </div>
+                                <div class="card-body">
+                                    <form [formGroup]="updateForm">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">First Name</label>
+                                                    <input type="text" class="form-control"
+                                                    matInput formControlName="fname" [(ngModel)]="p_data.fname">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Last Name</label>
+                                                    <input type="text" class="form-control" matInput formControlName="lname" [(ngModel)]="p_data.lname">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">User Bio</label>
+                                                    <input type="text" class="form-control" matInput formControlName="userBio" [(ngModel)]="p_data.userBio">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">User Name</label>
+                                                    <input type="text" class="form-control" matInput formControlName="userName" [(ngModel)]="p_data.userName">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Gender</label>
+                                                    <input type="text" class="form-control" matInput formControlName="gender" [(ngModel)]="p_data.gender">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                    <label class="bmd-label-floating">Upolad Image Profile </label>
+                                                    <!-- <input type="file" class="form-control" matInput formControlName="proFileImg" [(ngModel)]="p_data.proFileImg">  -->
+                                                    <input type="file" #file formControlName="proFileImg" [(ngModel)]="p_data.proFileImg" (change)="uploadImg(file.files)">
+                                            </div>
+                                        </div>
+                                        <br><br>
+                                        <button type="submit" class="btn btn-rose pull-right" (click)="updateProfile()">Update Profile</button>
+                                        <div class="clearfix"></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card card-profile">
+                                <div class="card-avatar">
+                                    <a href="#pablo">
+                                        <img class="img" src="../../assets/Img/{{admin.UserInfo.proFileImg}}" />
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h6 class="card-category text-gray">{{admin.UserInfo.userName}}</h6>
+                                    <h4 class="card-title"></h4>
+                                    <p class="card-description">
+                                        {{admin.UserInfo.userBio}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <app-footer-admin></app-footer-admin>
+    </div>
+</div>

@@ -1,0 +1,240 @@
+<div class="layout overflow-hidden">
+    <!-- Navigation -->
+    <app-navbar></app-navbar>
+    <!-- Navigation -->
+
+
+
+    <aside class="sidebar bg-light">
+        <div class="h-100" role="">
+            <!-- Settings -->
+            <div class=" h-100" id="tab-content-settings" role="tabpanel">
+                <div class="d-flex flex-column h-100">
+                    <div class="hide-scrollbar">
+                        <div class="container py-8">
+
+                            <!-- Title -->
+                            <div class="mb-8">
+                                <h2 class="fw-bold m-0">Settings</h2>
+                            </div>
+
+                            <!-- Search -->
+                            <div class="mb-6">
+                                <form action="#">
+                                    <div class="input-group">
+                                        <div class="input-group-text">
+                                            <div class="icon icon-lg">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                                            </div>
+                                        </div>
+
+                                        <input type="text" class="form-control form-control-lg ps-0" placeholder="Search messages or users" aria-label="Search for messages or users...">
+                                    </div>
+                                </form>
+                            </div>
+
+                            <!-- Profile -->
+                            <div class="card border-0">
+                                <div class="card-body">
+                                    <div class="row align-items-center gx-5" *ngIf="this.chatService.myProfile != undefined">
+                                        <div class="col-auto">
+                                            <div class="avatar">
+                                                <img *ngIf="this.chatService.urls.length == 0" src="../../../assets/Img/{{this.chatService.old_Data.proFileImg}}" alt="#" class="avatar-img">
+                                                <img *ngIf="this.chatService.urls.length > 0" [src]="this.chatService.urls[0].url" width="100%" height="100%" class="avatar-img">
+                                                <div class="badge badge-circle bg-secondary border-outline position-absolute bottom-0 end-0">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-image"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+                                                </div>
+                                                <input id="upload-profile-photo" class="d-none" type="file" #file (change)="detectFiles($event)">
+                                                <label class="stretched-label mb-0" for="upload-profile-photo"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <h5>{{this.chatService.old_Data.fname}} {{this.chatService.old_Data.lname}}</h5>
+                                            <p>{{this.chatService.old_Data.userName}}</p>
+                                        </div>
+                                        <div class="col-auto">
+                                            <a (click)="logout()" class="text-muted">
+                                                <div class="icon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Profile -->
+
+                            <!-- Account -->
+                            <div class="mt-8">
+                                <div class="d-flex align-items-center mb-4 px-6">
+                                    <small class="text-muted me-auto">Account</small>
+                                </div>
+
+                                <div class="card border-0">
+                                    <div class="card-body py-2">
+                                        <!-- Accordion -->
+                                        <div class="accordion accordion-flush" id="accordion-profile">
+                                            <div class="accordion-item">
+                                                <div class="accordion-header" id="accordion-profile-1">
+                                                    <a href="#" class="accordion-button text-reset collapsed" data-bs-toggle="collapse" data-bs-target="#accordion-profile-body-1" aria-expanded="false" aria-controls="accordion-profile-body-1">
+                                                        <div>
+                                                            <h5>Profile settings</h5>
+                                                            <p>Change your profile settings</p>
+                                                        </div>
+                                                    </a>
+                                                </div>
+
+                                                <div id="accordion-profile-body-1" *ngIf="this.chatService.old_Data != undefined" class="accordion-collapse collapse" aria-labelledby="accordion-profile-1" data-parent="#accordion-profile">
+                                                    <div class="accordion-body">
+                                                        <form [formGroup]="Profile">
+                                                            <div class="form-floating mb-6">
+                                                                <input type="text" class="form-control" id="profile-name" [(ngModel)]="this.chatService.old_Data.fname" formControlName="fname">
+                                                                <label for="profile-name">First Name</label>
+                                                            </div>
+
+                                                            <div class="form-floating mb-6">
+                                                                <input type="text" class="form-control" id="profile-phone" [(ngModel)]="this.chatService.old_Data.lname" formControlName="lname">
+                                                                <label for="profile-phone">Last Name</label>
+                                                            </div>
+
+                                                            <div class="form-floating mb-6">
+                                                                <input type="email" class="form-control" id="profile-email" [(ngModel)]="this.chatService.old_Data.userName" formControlName="userName">
+                                                                <label for="profile-email">User Name</label>
+                                                            </div>
+
+                                                            <div class="form-floating mb-6">
+                                                                <textarea class="form-control" placeholder="Bio" id="profile-bio" data-autosize="true" [(ngModel)]="this.chatService.old_Data.userBio" formControlName="userBio" style="min-height: 120px;"></textarea>
+                                                                <label for="profile-bio">Bio</label>
+                                                            </div>
+
+                                                            <button type="button" class="btn btn-block btn-lg btn-primary w-100" (click)="upDateProfile()">Save</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="accordion-item">
+                                                <div class="accordion-header" id="accordion-profile-2">
+                                                    <a href="#" class="accordion-button text-reset collapsed" data-bs-toggle="collapse" data-bs-target="#accordion-profile-body-2" aria-expanded="false" aria-controls="accordion-profile-body-2">
+                                                        <div>
+                                                            <h5>Rate Us</h5>
+                                                            <p>Keep us on touch</p>
+                                                        </div>
+                                                    </a>
+                                                </div>
+
+                                                <div id="accordion-profile-body-2" class="accordion-collapse collapse" aria-labelledby="accordion-profile-2" data-parent="#accordion-profile">
+                                                    <div class="accordion-body">
+
+
+                                                        <div class="form-floating mb-6">
+                                                            <textarea class="form-control" placeholder="Bio" id="profile-bio" data-autosize="true" [formControl]="Text" style="min-height: 120px;"></textarea>
+                                                            <label for="profile-bio">What do you think of us?</label>
+                                                        </div>
+
+
+                                                        <button type="button" [disabled]="!Text.valid" class="btn btn-block btn-lg btn-primary w-100" (click)="sendTest()">Send</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Account -->
+
+                            <!-- Security -->
+                            <div class="mt-8">
+                                <div class="d-flex align-items-center my-4 px-6">
+                                    <small class="text-muted me-auto">Security</small>
+                                </div>
+
+                                <div class="card border-0">
+                                    <div class="card-body py-2">
+                                        <!-- Accordion -->
+                                        <div class="accordion accordion-flush" id="accordion-security">
+                                            <div class="accordion-item">
+                                                <div class="accordion-header" id="accordion-security-1">
+                                                    <a href="#" class="accordion-button text-reset collapsed" data-bs-toggle="collapse" data-bs-target="#accordion-security-body-1" aria-expanded="false" aria-controls="accordion-security-body-1">
+                                                        <div>
+                                                            <h5>Password</h5>
+                                                            <p>Change your password</p>
+                                                        </div>
+                                                    </a>
+                                                </div>
+
+                                                <div id="accordion-security-body-1" class="accordion-collapse collapse" aria-labelledby="accordion-security-1" data-parent="#accordion-security">
+                                                    <div class="accordion-body">
+                                                        <form action="#" [formGroup]="ChangeCurrentPassword">
+                                                            <div class="form-floating mb-6">
+                                                                <input type="password" class="form-control" id="profile-current-password" placeholder="Current Password" autocomplete="" matInput formControlName="oldPassword">
+                                                                <label for="profile-current-password">Current Password</label>
+                                                                <label *ngIf="ChangeCurrentPassword.controls['oldPassword'].hasError('required') && ChangeCurrentPassword.controls['oldPassword'].touched" for="signin-password" style="color:red; font-weight:bold;">Current Password</label>
+                                                            </div>
+
+                                                            <div class="form-floating mb-6">
+                                                                <input type="password" class="form-control" id="profile-new-password" placeholder="New password" autocomplete="" matInput formControlName="NewPassowrd">
+                                                                <label for="profile-new-password">New password</label>
+                                                                <label *ngIf="ChangeCurrentPassword.controls['NewPassowrd'].hasError('required') && ChangeCurrentPassword.controls['NewPassowrd'].touched" for="signin-password" style="color:red; font-weight:bold;">New password</label>
+                                                                <span *ngIf="ChangeCurrentPassword.controls['NewPassowrd'].hasError('minlength') && ChangeCurrentPassword.controls['NewPassowrd'].touched" style="color:red; font-weight: bold;">Your Password less than 8 Characters</span>
+                                                            </div>
+
+                                                            <div class="form-floating mb-6">
+                                                                <input type="password" class="form-control" id="profile-verify-password" placeholder="Verify Password" autocomplete="" matInput formControlName="ReNewPassowrd">
+                                                                <label for="profile-verify-password">Verify Password</label>
+                                                                <label *ngIf="ChangeCurrentPassword.controls['ReNewPassowrd'].hasError('required') && ChangeCurrentPassword.controls['ReNewPassowrd'].touched" for="signin-password" style="color:red; font-weight:bold;">Verify Password</label>
+                                                                <span *ngIf="ChangeCurrentPassword.controls['ReNewPassowrd'].hasError('minlength') && ChangeCurrentPassword.controls['ReNewPassowrd'].touched" style="color:red; font-weight: bold;">Your Password less than 8 Characters</span>
+                                                            </div>
+                                                            <button [disabled]="!ChangeCurrentPassword.valid" type="button" class="btn btn-block btn-lg btn-primary w-100" (click)="ChangeCurrPass()">Save</button>
+                                                        </form>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Switch -->
+                                            <div class="accordion-item">
+                                                <div class="accordion-header">
+                                                    <div class="row align-items-center">
+                                                        <div class="col" (click)="GenerateQR()" style="cursor: pointer;">
+                                                            <h5>Generate QR</h5>
+                                                            <p>EAZY TO ADD YOU</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Security -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+
+    <!-- Chat -->
+    <main class="main" [ngClass]="this.chatService.collapse  ? 'is-visible' : ''" data-dropzone>
+        <div class="container h-100">
+            <app-chatempty *ngIf="this.chatService.id==0"></app-chatempty>
+            <app-chat-with-message *ngIf="this.chatService.id!=0"></app-chat-with-message>
+        </div>
+    </main>
+    <!-- Chat -->
+
+</div>
+<!-- Layout -->
+
+<!-- Modal: Profile -->
+<ng-template #QRCode>
+
+    <ngx-qrcode [elementType]="elementType" [value]="value" class="aclass">
+    </ngx-qrcode>
+
+    <img src="../../../assets/home/Images/logo/landing-logo.png" width="100%" style="padding: 12px; margin-top: 30px;" alt="logo">
+
+
+</ng-template>
